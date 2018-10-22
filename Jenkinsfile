@@ -30,9 +30,9 @@ node {
         checkout scm
     }
 
-    stage('Test') {
-        sh './gradlew test || true'
-    }
+    //stage('Test') {
+    //    sh './gradlew test || true'
+    //}
 
     stage('Build') {
         try {
