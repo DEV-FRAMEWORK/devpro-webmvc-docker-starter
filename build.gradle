@@ -26,7 +26,7 @@ apply plugin: 'idea'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.palantir.docker'
 
-group = 'springio'
+group = 'localhost:5000'
 
 bootWar {
 	baseName = 'web-mvc-starter'
