@@ -57,5 +57,6 @@ node {
 
     stage('Deploy') {
         sh 'echo "kubectl apply --namespace=development -f deployment.yaml"'
+        sh 'echo "docker-multi"'
     }
 }
