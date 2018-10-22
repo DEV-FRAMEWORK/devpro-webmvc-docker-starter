@@ -1,0 +1,30 @@
+package com.ktds.devpro;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+/**
+ *
+ * Spring Boot Application ?????? ?????????
+ * <p>
+ *
+ * <pre>
+ * ????????????(Modification Information)??
+ * ?????????   ?????????    ????????????
+ * ------------------------------------
+ * 2017. 3. 16.   kt ds     ????????????
+ * </pre>
+ *
+ * @author kt ds A.CoE(yu.chae@kt.com)
+ * @since 2017. 3. 16.
+ * @version 1.0.0
+ * @see
+ *
+ */
+@SpringBootApplication
+public class WebMvcStarterApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(WebMvcStarterApplication.class, args);
+	}
+}

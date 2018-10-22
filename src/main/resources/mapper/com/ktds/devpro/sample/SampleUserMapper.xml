@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ktds.devpro.sample.SampleUserMapper">
+
+	<select id="selectSampleUserList" parameterType="map" resultType="camelMap">
+
+		<include refid="com.ktds.devpro.sample.include.PagingH2.startPage" />
+		SELECT
+			  USER_ID
+			, PASSWORD
+			, USER_NAME
+			, CREATE_DATE
+		FROM SAMPLE_USER
+		WHERE 1=1
+		<if test="userId != null and userId != ''">
+			<![CDATA[ AND USER_ID LIKE '%'||#{userId}||'%' ]]>
+		</if>
+		<if test="userName != null and userName != ''">
+			<![CDATA[ AND USER_NAME LIKE '%'||#{userName}||'%' ]]>
+		</if>
+        ORDER BY USER_ID ASC
+		<include refid="com.ktds.devpro.sample.include.PagingH2.endPage" />
+	</select>
+
+	<select id="selectSampleUserListCount" parameterType="map" resultType="int">
+		SELECT
+			  COUNT(*)
+		FROM SAMPLE_USER
+		WHERE 1=1
+		<if test="userId != null and userId != ''">
+			<![CDATA[ AND USER_ID LIKE '%'||#{userId}||'%' ]]>
+		</if>
+		<if test="userName != null and userName != ''">
+			<![CDATA[ AND USER_NAME LIKE '%'||#{userName}||'%' ]]>
+		</if>
+	</select>
+
+	<select id="selectSampleUserById" parameterType="sampleUserDomain" resultType="sampleUserVo">
+		SELECT
+			USER_ID
+			, PASSWORD
+			, USER_NAME
+			, CREATE_DATE
+		FROM SAMPLE_USER
+		WHERE USER_ID = #{userId}
+	</select>
+
+	<update id="updateSampleUser" parameterType="sampleUserDomain">
+		UPDATE SAMPLE_USER
+		SET
+			PASSWORD = #{password}
+			, USER_NAME = #{userName}
+		WHERE
+			USER_ID = #{userId}
+	</update>
+
+	<insert id="insertSampleUser" parameterType="sampleUserDomain">
+		INSERT INTO SAMPLE_USER (
+			USER_ID
+			, USER_NAME
+			, PASSWORD
+			, CREATE_DATE )
+		VALUES (
+			#{userId}
+			, #{userName}
+			, #{password}
+			, sysdate() )
+	</insert>
+
+	<delete id="deleteSampleUser" parameterType="sampleUserDomain">
+		DELETE FROM SAMPLE_USER
+		WHERE
+			USER_ID = #{userId}
+	</delete>
+
+	<select id="createSampleTable">
+		DROP TABLE IF EXISTS SAMPLE_GROUP_USER;
+		DROP TABLE IF EXISTS SAMPLE_GROUP;
+		DROP TABLE IF EXISTS SAMPLE_USER;
+
+		CREATE TABLE SAMPLE_USER(
+			USER_ID VARCHAR(50) PRIMARY KEY
+			, PASSWORD VARCHAR(50)
+			, USER_NAME VARCHAR(50)
+			, CREATE_DATE TIMESTAMP
+		);
+
+		CREATE TABLE SAMPLE_GROUP(
+			GROUP_ID VARCHAR(50) PRIMARY KEY
+			, GROUP_NAME VARCHAR(50)
+			, CREATE_DATE TIMESTAMP
+		);
+
+		CREATE TABLE SAMPLE_GROUP_USER(
+			GROUP_ID VARCHAR(50)
+			, USER_ID VARCHAR(50)
+			, CREATE_DATE TIMESTAMP
+			,FOREIGN KEY (GROUP_ID) REFERENCES SAMPLE_GROUP(GROUP_ID)
+			,FOREIGN KEY (USER_ID) REFERENCES SAMPLE_USER(USER_ID)
+		);
+	</select>
+
+	<select id="createSampleData">
+		DELETE FROM SAMPLE_GROUP_USER;
+		DELETE FROM SAMPLE_GROUP;
+		DELETE FROM SAMPLE_USER;
+		INSERT INTO SAMPLE_USER VALUES('tester1', '12345', '이대형', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester2', '12345', '하준호', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester3', '12345', '유한준', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester4', '12345', '모넬', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester5', '12345', '박경수', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester6', '12345', '이진영', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester7', '12345', '이해창', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester8', '12345', '박기혁', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester9', '12345', '심우준', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester10', '12345', '피어밴드', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester11', '12345', '최원재', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester12', '12345', '최대성', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester13', '12345', '채선관', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester14', '12345', '주권', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester15', '12345', '조병욱', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester16', '12345', '조무근', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester17', '12345', '조근종', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester18', '12345', '정성곤', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester19', '12345', '정대현', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester20', '12345', '장현우', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester21', '12345', '장시환', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester31', '12345', '나성범', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester32', '12345', '손시헌', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester33', '12345', '모창민', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester34', '12345', '이원재', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester41', '12345', '양의지', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester42', '12345', '에반스', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester43', '12345', '장원준', sysdate);
+		INSERT INTO SAMPLE_USER VALUES('tester44', '12345', '니퍼트', sysdate);
+
+		INSERT INTO SAMPLE_GROUP VALUES('kt', '케이티위즈', sysdate);
+		INSERT INTO SAMPLE_GROUP VALUES('nc', '엔씨 다이노스', sysdate);
+		INSERT INTO SAMPLE_GROUP VALUES('dusan', '두산베어스', sysdate);
+
+		INSERT INTO SAMPLE_GROUP_USER VALUES('kt', 'tester1', sysdate);
+		INSERT INTO SAMPLE_GROUP_USER VALUES('kt', 'tester2', sysdate);
+		INSERT INTO SAMPLE_GROUP_USER VALUES('kt', 'tester3', sysdate);
+		INSERT INTO SAMPLE_GROUP_USER VALUES('kt', 'tester4', sysdate);
+		INSERT INTO SAMPLE_GROUP_USER VALUES('kt', 'tester5', sysdate);
+		INSERT INTO SAMPLE_GROUP_USER VALUES('kt', 'tester6', sysdate);
+		INSERT INTO SAMPLE_GROUP_USER VALUES('kt', 'tester7', sysdate);
+		INSERT INTO SAMPLE_GROUP_USER VALUES('kt', 'tester8', sysdate);
+		INSERT INTO SAMPLE_GROUP_USER VALUES('kt', 'tester9', sysdate);
+		INSERT INTO SAMPLE_GROUP_USER VALUES('kt', 'tester10', sysdate);
+		INSERT INTO SAMPLE_GROUP_USER VALUES('nc', 'tester31', sysdate);
+		INSERT INTO SAMPLE_GROUP_USER VALUES('nc', 'tester32', sysdate);
+		INSERT INTO SAMPLE_GROUP_USER VALUES('nc', 'tester33', sysdate);
+		INSERT INTO SAMPLE_GROUP_USER VALUES('nc', 'tester34', sysdate);
+		INSERT INTO SAMPLE_GROUP_USER VALUES('dusan', 'tester41', sysdate);
+		INSERT INTO SAMPLE_GROUP_USER VALUES('dusan', 'tester42', sysdate);
+		INSERT INTO SAMPLE_GROUP_USER VALUES('dusan', 'tester43', sysdate);
+		INSERT INTO SAMPLE_GROUP_USER VALUES('dusan', 'tester44', sysdate);
+	</select>
+
+</mapper>

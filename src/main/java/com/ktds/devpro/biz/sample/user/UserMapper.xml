@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ktds.devpro.biz.sample.user.UserMapper">
+
+	<!-- 
+	  쿼리 처리 중 특이사항은 주석으로 남겨주세요. 
+	 -->
+	<select id="selectSampleUserList" resultType="com.ktds.devpro.biz.sample.user.SampleUserVo" parameterType="com.ktds.devpro.biz.sample.user.SampleUserVo">
+	SELECT /* UserMapper_selectSampleUserList */
+		USER_ID
+		, PASSWORD
+		, USER_NAME
+		, CREATE_DATE
+		FROM SAMPLE_USER
+		WHERE 1=1
+		<if test="userId != null and userId != ''">
+			AND USER_ID like '%' || #{userId} ||'%' 
+		</if>
+		<if test="userName != null and userName != ''">
+			AND USER_NAME LIKE '%'||#{userName}||'%'
+		</if>
+        ORDER BY USER_ID ASC
+  	</select>
+  	
+	<select id="countSampleUserList" resultType="integer" parameterType="com.ktds.devpro.biz.sample.user.SampleUserVo">
+		SELECT COUNT(*) CNT /* UserMapper_countSampleUserList */
+		FROM SAMPLE_USER
+		WHERE 1 = 1 
+		<if test="userId != null and userId != ''">
+			AND USER_ID like '%' || #{userId} ||'%' 
+		</if>
+		<if test="userName != null and userName != ''">
+			AND USER_NAME LIKE '%'||#{userName}||'%'
+		</if>
+  	</select>
+  	
+  	<select id="selectSampleUser" resultType="com.ktds.devpro.biz.sample.user.SampleUserVo" parameterType="com.ktds.devpro.biz.sample.user.SampleUserVo">
+		SELECT /* UserMapper_selectSampleUser */
+			USER_ID
+			, PASSWORD
+			, USER_NAME
+			, CREATE_DATE
+		FROM SAMPLE_USER
+		WHERE USER_ID = #{userId}
+		
+  	</select>
+	
+	<insert id="insertSampleUser" parameterType="com.ktds.devpro.biz.sample.user.SampleUserVo">
+        INSERT INTO /* UserMapper_insertSampleUser */
+        SAMPLE_USER (
+			USER_ID
+			, USER_NAME
+			, PASSWORD
+			, CREATE_DATE )
+		VALUES (
+			#{userId}
+			, #{userName}
+			, #{password}
+			, sysdate() )
+    </insert>
+	
+	<update id="updateSampleUser" parameterType="com.ktds.devpro.biz.sample.user.SampleUserVo">
+		UPDATE /* UserMapper_updateSampleUser */
+		SAMPLE_USER
+		<set>
+		<trim prefixOverrides=",">
+			<if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(password)"> 
+			,PASSWORD = #{password}
+			</if>
+			<if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(userName)"> 
+			,USER_NAME = #{userName}
+			</if>
+		</trim>
+		</set>
+		WHERE 1 = 1
+		AND USER_ID = #{userId}
+			
+	</update>
+	
+	<delete id="deleteSampleUser" parameterType="String">
+		DELETE /* UserMapper_deleteSampleUser */
+		SAMPLE_USER
+		WHERE 1 = 1
+		AND USER_ID IN
+		<foreach collection="list" item="userId"  open="(" close=")" separator=",">
+		 #{id}
+		</foreach>
+	</delete>
+</mapper>
+

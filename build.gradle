@@ -1,0 +1,130 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.3.RELEASE'
+		log4jVersion = '2.10.0'
+		
+	}
+	repositories {
+		//mavenCentral()
+		maven {
+        	url 'http://192.168.200.204:8081/nexus/content/groups/public/'
+    	}
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath('gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.13.0')
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'war'
+apply plugin: 'groovy'
+apply plugin: 'idea'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.palantir.docker'
+
+group = 'springio'
+
+bootWar {
+	baseName = 'web-mvc-starter'
+	version = '0.0.1-SNAPSHOT'
+}
+
+docker {
+	dependsOn build
+	name "${project.group}/${bootWar.baseName}"
+	files bootWar.archivePath
+	buildArgs(['WAR_FILE': "${bootWar.archiveName}"])
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+configurations {
+	providedRuntime
+}
+
+task local {
+	bootRun {
+		systemProperty("spring.profiles.active", "local")
+	}
+}
+
+dependencies {
+
+	// 기본 라이브러리
+	compile('org.springframework.boot:spring-boot-starter-aop')
+	compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-jdbc')
+	
+	compileOnly('org.projectlombok:lombok')
+	
+	//spring- security lib
+	compile('org.springframework.boot:spring-boot-starter-security')
+	
+	
+	//유용 라이브러리 모음
+	compile('org.apache.commons:commons-lang3:3.6')
+
+	// 분산 트랙잭션 라이브러리
+	//compile('org.springframework.boot:spring-boot-starter-jta-atomikos')
+
+	// 서블릿 JSP 라이브러리
+	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+	compile("javax.servlet:jstl")
+	compile("org.apache.tomcat.embed:tomcat-embed-jasper")
+	
+	// Monitoring and managing tool
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+
+	// 스프링 부트 개발 툴(클래스 자동 리로더 등)
+	runtime('org.springframework.boot:spring-boot-devtools')
+
+	// Database 초기화 및 JPA 라이브러리
+	compile("org.springframework.boot:spring-boot-starter-data-jpa")
+
+	// H2 Database 라이브러리
+	compile('com.h2database:h2')
+
+	// HSQL Database 라이브러리
+	compile('org.hsqldb:hsqldb:2.3.4')
+
+	// Apache Common 라이브러리
+	compile("org.apache.commons:commons-collections4:4.2")
+
+	// Log4j2 라이브러리
+	compile('org.springframework.boot:spring-boot-starter-log4j2')
+	compile("org.apache.logging.log4j:log4j-core:${log4jVersion}")
+	compile("org.apache.logging.log4j:log4j-api:${log4jVersion}")
+	compile("org.apache.logging.log4j:log4j-slf4j-impl:${log4jVersion}")
+
+	compile("com.lmax:disruptor:3.3.6")
+
+	// 테스트 프레임워크(Spock) 적용 스크립트(Groovy) 라이브러리
+	compile 'org.codehaus.groovy:groovy-all:2.4.10'
+
+	// 테스트 프레임워크(Spock) 라이브러리
+	testCompile 'org.springframework.boot:spring-boot-starter-test'
+	testCompile 'org.spockframework:spock-core:1.1-groovy-2.4-rc-3'
+	testCompile 'org.spockframework:spock-spring:1.1-groovy-2.4-rc-3'
+	testRuntime 'cglib:cglib-nodep:3.2.4'
+
+	// Log4j2 충돌 제외 라이브러리
+	configurations {
+		all*.exclude module : 'spring-boot-starter-logging'
+	}
+	
+	
+	//lucy xss lib
+	compile("com.navercorp.lucy:lucy-xss-servlet:2.0.0")
+	compile("com.navercorp.lucy:lucy-xss:1.6.3")
+}

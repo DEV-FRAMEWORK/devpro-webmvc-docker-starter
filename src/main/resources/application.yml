@@ -1,0 +1,121 @@
+# WAS 서비스 포트 설정
+server:
+  port: 8888
+  servlet:
+    contextPath: /devpro
+#    session:
+#      timeout: 180s
+  error:
+    whitelabel:
+      enabled: false
+
+
+# file 첨부 
+  filePath: /Volumes/SD_CARD/empty/aaa/ 
+  fileExt: txt,zip,jpeg,png,gif,jpg,doc,pptx,ppt
+  file:
+    maxsize: 10
+
+# Actucator 활성화
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+# Spring 환경 설정
+spring:
+   
+#  # 1개 DataSource 설정
+#  datasource:
+#    platform: h2
+#    driverClassName: org.h2.Driver
+#    jdbcUrl: jdbc:h2:~/test;AUTO_SERVER=TRUE
+#    username: sa
+#    password:
+
+  # 2개 이상 DataSource 설정(config 경로에서 DataSource 설정 필요)
+  datasource:
+    h2:
+      platform: h2
+      driverClassName: org.h2.Driver
+      jdbcUrl: jdbc:h2:~/test;
+      username: sa
+      password:
+    hsql:
+      platform: hsql
+      driverClassName: org.hsqldb.jdbc.JDBCDriver
+      jdbcUrl: jdbc:hsqldb:file:~/hsqltest;encoding=UTF-8
+      username: sa
+      password:
+
+#  # 분산 트랜잭션(2PC) DataSource 설정(config 경로에서 DataSource 설정 필요)
+#  jta:
+#    enabled: true
+#    service: com.atomikos.icatch.standalone.UserTransactionServiceFactory
+#    max-actives: 200
+#    enable-logging: falseps -ef
+#
+#    atomikos:
+#      datasource:
+#        primary:
+#          unique-resource-name: dataSource
+#          max-pool-size: 5
+#          min-pool-size: 1
+#          max-life-time: 20000
+#          borrow-connection-timeout: 10000
+#          xa-data-source-class-name: org.h2.jdbcx.JdbcDataSource
+#          xa-properties:
+#            user: sa
+#            password:
+#            URL: jdbc:h2:~/test;DB_CLOSE_DELAY=-1
+#
+#        second:
+#          unique-resource-name: secondDataSource
+#          max-pool-size: 5
+#          min-pool-size: 1
+#          max-life-time: 20000
+#          borrow-connection-timeout: 10000
+#          xa-data-source-class-name: org.h2.jdbcx.JdbcDataSource
+#          xa-properties:
+#            user: sa
+#            password:
+#            URL: jdbc:h2:~/test2;DB_CLOSE_DELAY=-1
+
+# spring admin 설정 
+#  application:
+#   name: springboot-syno1 #admin 에서 보여질 application name
+#  boot:
+#     admin:
+#       client:
+#         url: http://192.168.200.15:9090/ #admin server url
+# jsp 사용 설정.
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+
+  # h2 콘솔 활성화
+  h2:
+    console:
+      enabled: true
+      path: /console
+      
+# multipart fileupload max size config.
+  http:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+# Log4j2 기본 설정
+logging:
+  config: classpath:log4j2-local.xml
+  level:
+    ROOT: DEBUG
+
+# 웹 관련 설정
+web:
+  config:
+    # 페이지 당 기본 게시물 갯수
+    default-page-size: 10

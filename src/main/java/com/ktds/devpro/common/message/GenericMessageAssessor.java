@@ -1,0 +1,31 @@
+package com.ktds.devpro.common.message;
+
+/**
+ *
+ * <p>
+ *
+ * <pre>
+ * ????????????(Modification Information)??
+ * ?????????   ?????????    ????????????
+ * ------------------------------------
+ * 2017. 3. 16.   kt ds     ????????????
+ * </pre>
+ *
+ * @author kt ds A.CoE(yu.chae@kt.com)
+ * @since 2017. 3. 16.
+ * @version 1.0.0
+ * @see
+ *
+ */
+public interface GenericMessageAssessor {
+
+    boolean isCustomeMessage();
+
+    Object getData();
+
+    String getMessage();
+
+    String getReturnCode();
+
+    void transformMessage(LocaleAwareMessageService service);
+}
