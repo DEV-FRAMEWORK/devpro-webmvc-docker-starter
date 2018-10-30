@@ -1,7 +1,7 @@
 ### DevPro 2.0 - web-mvc-start 소개
 ---
 
-web-mvc-start 프로젝트는 Spring boot 기반으로 Web Application 개발을 빠르게 구축하기 위한 서버단 개발 환경을 제공한다. 
+web-mvc-start 프로젝트는 Spring boot 기반으로 Web Application 개발을 빠르게 구축하기 위한 서버단 개발 환경을 제공한다... 
 
 
 ### 1. 프레임워크 기본 구조 
