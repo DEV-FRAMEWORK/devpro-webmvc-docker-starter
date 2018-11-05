@@ -11,6 +11,9 @@ spec:
     port: 8888
     nodePort: 30400
     targetPort: 8888
+  externalIPs:
+  - 192.168.200.202
+  sessionAffinity: ClientIP 
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
