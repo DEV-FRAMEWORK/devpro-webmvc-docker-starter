@@ -1,0 +1,37 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: web-mvc-starter-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: web-mvc-starter
+  ports:
+  - protocol: TCP
+    port: 8888
+    nodePort: 30300
+    targetPort: 8888
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: web-mvc-starter 
+  labels:
+    app: web-mvc-starter
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web-mvc-starter
+  template:
+    metadata:
+      labels:
+        app: web-mvc-starter
+        version: "latest"
+    spec:
+      containers:
+      - name: web-mvc-starter
+        image: 192.168.200.104:5000/web-mvc-starter
+        ports:
+        - name: http
+          containerPort: 8888
