@@ -31,6 +31,7 @@ spec:
       labels:
         app: web-mvc-starter
         version: "latest"
+        role: rolling-update
     spec:
       containers:
       - name: web-mvc-starter
