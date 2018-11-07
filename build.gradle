@@ -15,7 +15,7 @@ buildscript {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 		classpath('gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.13.0')
 	}
-}
+} 
 
 apply plugin: 'java'
 apply plugin: 'eclipse-wtp'
