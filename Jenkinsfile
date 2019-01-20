@@ -15,7 +15,7 @@ node {
             sh './gradlew build -x test'
         } catch(e) {
             mail subject: "Jenkins Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) failed with ${e.message}",
-                to: 'syno@kt.com',
+                to: 'yonghui.park@kt.com',
                 body: "Please go to $env.BUILD_URL."
         }
     }
