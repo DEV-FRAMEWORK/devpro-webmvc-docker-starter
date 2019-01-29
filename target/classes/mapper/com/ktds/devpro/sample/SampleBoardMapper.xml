@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ktds.devpro.sample.SampleBoardMapper">
+	<select id="selectSampleBoardList" parameterType="map" resultType="camelMap">
+
+			SELECT
+				    IDX,
+				    TITLE,
+				    HIT_CNT,
+				    CREA_DTM
+				FROM
+				    SAMPLE_BOARD
+				WHERE
+					DEL_GB = 'N'    
+				ORDER BY IDX DESC
+	</select>
+	<insert id="insertSampleBoard" parameterType="sampleBoardDomain" useGeneratedKeys="true" keyProperty="idx">
+		<selectKey keyProperty="idx" resultType="int" order="BEFORE">
+			SELECT SEQ_SAMPLE_BOARD_IDX.NEXTVAL FROM DUAL
+		</selectKey>
+		
+			
+			INSERT INTO SAMPLE_BOARD
+			(
+				IDX,
+			    TITLE, 
+			    CONTENTS, 
+			    HIT_CNT, 
+			    DEL_GB, 
+			    CREA_DTM, 
+			    CREA_ID
+			)
+			VALUES
+			(
+				#{idx}, 
+			    #{title}, 
+			    #{contents}, 
+			    0, 
+			    'N', 
+			    SYSDATE, 
+			    'Admin'
+			)
+		
+	</insert>
+	<select id="selectBoardDetail" parameterType="hashmap" resultType="camelMap">
+		
+			SELECT
+				IDX,
+				HIT_CNT,
+				CREA_ID,
+				CREA_DTM,
+				TITLE,
+				CONTENTS
+			FROM
+				SAMPLE_BOARD
+			WHERE
+				IDX = #{idx}		
+		
+	</select>
+	<insert id="insertSampleFileInfo" parameterType="hashmap">
+		
+			
+			INSERT INTO SAMPLE_FILE
+			(
+				IDX,
+				BOARD_IDX,
+				ORIGINAL_FILE_NAME,
+				STORED_FILE_NAME,
+				FILE_SIZE,
+				CREA_ID
+			)
+			VALUES
+			(
+				SEQ_SAMPLE_FILE_IDX.NEXTVAL,
+				#{boardIdx},
+				#{originalFileName},
+				#{storedFileName},
+				#{fileSize},
+				'admin' 
+			)
+	
+	</insert>
+	<select id="selectFileList" parameterType="hashmap" resultType="camelMap">
+
+		SELECT
+			IDX,
+			BOARD_IDX,
+			ORIGINAL_FILE_NAME,
+			ROUND(FILE_SIZE/1024,1) AS FILE_SIZE
+
+		FROM SAMPLE_FILE
+		WHERE BOARD_IDX = #{idx}
+		AND DEL_GB='N'
+		
+	</select>
+	
+	<select id="selectFileInfo" parameterType="hashmap" resultType="camelMap">
+
+		SELECT
+            STORED_FILE_NAME,
+            ORIGINAL_FILE_NAME
+        FROM
+            SAMPLE_FILE
+        WHERE
+            IDX = #{idx}
+		
+		
+	</select>
+</mapper>

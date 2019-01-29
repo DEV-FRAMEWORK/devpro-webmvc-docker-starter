@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ktds.devpro.other.OtherUserMapper">
+
+	<select id="selectSampleUserById" parameterType="com.ktds.devpro.sample.SampleUserDomain" resultType="com.ktds.devpro.sample.SampleUserVo">
+		SELECT
+		USER_ID
+		, PASSWORD
+		, USER_NAME
+		, CREATE_DATE
+		FROM SAMPLE_USER
+		WHERE USER_ID = #{userId}
+	</select>
+
+	<update id="updateSampleUser" parameterType="com.ktds.devpro.sample.SampleUserDomain">
+		UPDATE SAMPLE_USER
+		SET
+			PASSWORD = #{password}
+			, USER_NAME = #{userName}
+		WHERE
+		USER_ID = #{userId}
+	</update>
+
+	<insert id="insertSampleUser" parameterType="com.ktds.devpro.sample.SampleUserDomain">
+		INSERT INTO SAMPLE_USER (
+		USER_ID
+			, USER_NAME
+			, PASSWORD
+			, CREATE_DATE
+		)
+		VALUES (
+			#{userId}
+			, #{userName}
+			, #{password}
+			, sysdate()
+		)
+	</insert>
+
+</mapper>

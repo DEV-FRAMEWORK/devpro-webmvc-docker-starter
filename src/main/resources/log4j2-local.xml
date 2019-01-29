@@ -33,9 +33,9 @@
 
         <Root level="info" includeLocation="true">
             <AppenderRef ref="STDOUT" />
-            <!-- 
+             
             <AppenderRef ref="RollingRandomAccessFile"/>
-            -->
+            
         </Root>
     </Loggers>
 

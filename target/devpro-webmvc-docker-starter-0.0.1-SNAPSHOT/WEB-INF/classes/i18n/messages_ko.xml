@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="OK">정상</entry>
+    <entry key="NG">오류</entry>
+    <entry key="msg000001">안녕하세요</entry>
+
+    <entry key="CM000010">정상적으로 저장 되었습니다.</entry>
+    <entry key="CM000020">저장이 되지 않았습니다.</entry>
+    <entry key="CM000030">왼쪽과 오른쪽 사용자 정보가 일치하지 않습니다.</entry>
+
+    <entry key="CM000040">[변경 완료] 변경 건수</entry>
+    <entry key="CM000050">[변경 실패] 변경 건수</entry>
+    <entry key="CM000060">{0} 삭제 건수</entry>
+</properties>

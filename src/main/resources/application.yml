@@ -17,13 +17,13 @@ server:
     maxsize: 10
 
 # Actucator 활성화
-management:
-  security:
-    enabled: false
-  endpoints:
-    web:
-      exposure:
-        include: "*"
+#management:
+#  security:
+#    enabled: false
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
 # Spring 환경 설정
 spring:
    
@@ -103,11 +103,15 @@ spring:
       path: /console
       
 # multipart fileupload max size config.
-  http:
+#  http:
+#    multipart:
+#      max-file-size: 10MB
+#      max-request-size: 10MB
+  servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
-
+      
 # Log4j2 기본 설정
 logging:
   config: classpath:log4j2-local.xml
