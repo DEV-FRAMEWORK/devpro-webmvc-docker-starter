@@ -34,13 +34,13 @@ apply plugin: 'com.palantir.docker'
 group = 'twinspark81'
 
 bootWar {
-	baseName = 'web-mvc-starter'
-	version = '0.0.1-SNAPSHOT'
+	baseName = 'devpro-webmvc-docker'
+	version = '0.0.1'
 }
 
 docker {
 	dependsOn build
-	name "${project.group}/${bootWar.baseName}"
+	name "${project.group}/${bootWar.baseName}:${bootWar.version}"
 	files bootWar.archivePath
 	buildArgs(['WAR_FILE': "${bootWar.archiveName}"])
 }
@@ -54,7 +54,6 @@ repositories {
         //url 'http://192.168.200.104:8081/repository/maven-public/'
 	//	url 'http://192.168.200.38:8081/repository/maven-central/'
     	}
-
 
 }
 
