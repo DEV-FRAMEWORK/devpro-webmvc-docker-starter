@@ -55,3 +55,5 @@ $ gradle bootRun
 ### 파일업로드 가이드 ###
 [여기](help/fileupload.guide.md)를 클릭하세요
 
+### tomcat was 설정 가이드 ###
+[여기](help/tomcatConfig-guide.md)를 클릭하세요
